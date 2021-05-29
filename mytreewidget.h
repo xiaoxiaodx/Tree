@@ -2,7 +2,9 @@
 #define MYTREEWIDGET_H
 
 #include <QGraphicsWidget>
-#include "binarysearchtree.h"
+#include "rbtree.h"
+
+using namespace std;
 class MyTreeWidget : public QGraphicsWidget
 {
     Q_OBJECT
@@ -28,8 +30,10 @@ public slots:
 
 private:
 
-     BinarySearchTree bstree;
-    void drawTreeNode(QPainter *pt,Node<string> *node,int level,float x,float y);
+     typedef RBTree<int,string> Tree;
+     typedef Tree::Node TreeNode;
+     Tree bstree;
+     void drawTreeNode(QPainter *pt,TreeNode *node,int level,float x,float y);
 
 
     //以下定义的是以像素为单位

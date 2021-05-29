@@ -19,12 +19,14 @@ SOURCES += \
     binarysearchtree.cpp \
     main.cpp \
     mainwindow.cpp \
-    mytreewidget.cpp
+    mytreewidget.cpp \
+    rbtree.cpp
 
 HEADERS += \
     binarysearchtree.h \
     mainwindow.h \
-    mytreewidget.h
+    mytreewidget.h \
+    rbtree.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

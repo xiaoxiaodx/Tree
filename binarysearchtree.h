@@ -42,9 +42,8 @@ public:
     BinarySearchTree();
 
     bool insert(int key);
-    bool insert(Node<string>* &n);
     bool remove(int key);
-    bool update(int key);
+
 
 //private:
     Node<string> *root;

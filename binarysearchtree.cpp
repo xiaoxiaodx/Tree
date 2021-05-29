@@ -67,12 +67,6 @@ bool BinarySearchTree::insert(int key)
     return true;
 }
 
-bool BinarySearchTree::insert(Node<string>* &n)
-{
-
-
-}
-
 
 bool BinarySearchTree::remove(int key){
 
@@ -230,8 +224,3 @@ bool BinarySearchTree::remove(int key){
     }
 }
 
-bool BinarySearchTree::update(int key){
-
-
-
-}

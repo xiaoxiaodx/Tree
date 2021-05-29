@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "binarysearchtree.h"
+//#include "binarysearchtree.h"
 #include <QMouseEvent>
 #include <QGraphicsScene>
 #include <QGraphicsView>

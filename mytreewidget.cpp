@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
+
+#include "rbtree.cpp"
 MyTreeWidget::MyTreeWidget()
 {
     nodeRadius = 40;
@@ -19,6 +21,7 @@ MyTreeWidget::MyTreeWidget()
 void MyTreeWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *,QWidget *){
 
 
+   //return;
     painter->setRenderHint(QPainter::Antialiasing,true);
 
 
@@ -29,30 +32,35 @@ void MyTreeWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *,QWi
         rooty = nodeRadius;
     }
 
-    drawTreeNode(painter,bstree.root,bstree.treedepth,rootx,rooty);
+    if(bstree.rootNode() != nullptr)
+     drawTreeNode(painter,bstree.rootNode(),bstree.treedepth,rootx,rooty);
 
 }
 
 
 void MyTreeWidget::slot_addnode(int key)
 {
-    bstree.insert(key);
+    Tree::Node *node = new Tree::Node;
+    node->key = key;
+    bstree.rbtree_insert(node);
 
 }
 void MyTreeWidget::slot_deletenode(int key)
 {
-    bstree.remove(key);
+
+
+
+    bstree.rbtree_remove(key);
 
 }
 
 
-void MyTreeWidget::drawTreeNode(QPainter *pt,Node<string> *node,int level,float x,float y)
+void MyTreeWidget::drawTreeNode(QPainter *pt,Tree::Node *node,int level,float x,float y)
 {
 
     if(node == nullptr)
         return;
-    Node<string> *childleft = node->left;
-    Node<string> *childright = node->right;
+
 
     QRect drawrect(x,y,nodeRadius*2,nodeRadius*2);
 
@@ -60,16 +68,20 @@ void MyTreeWidget::drawTreeNode(QPainter *pt,Node<string> *node,int level,float 
     //绘制节点圆形
     pt->save();
     pt->setPen(Qt::NoPen);
-    pt->setBrush(QBrush(QColor(200,200,200)));
+    if(node->color == NODE_RED)
+        pt->setBrush(QBrush(QColor(255,0,0)));
+    else
+        pt->setBrush(QBrush(QColor(0,0,0)));
     pt->drawEllipse(drawrect);
     pt->restore();
 
     //绘制文字
     pt->save();
-    pt->setPen(QColor(0,0,0));
+    pt->setPen(QColor(255,255,255));
     QFont font = pt->font();
     font.setPixelSize(20);
     QFontMetrics fm(font);
+
     QString showstr = QString::number(node->key);
     QRect stringRect = fm.boundingRect(showstr);
     int strx = drawrect.x() + drawrect.width()/2 - stringRect.width()/2;
@@ -91,6 +103,9 @@ void MyTreeWidget::drawTreeNode(QPainter *pt,Node<string> *node,int level,float 
 
 
     int tmplevel = level - 1;
+
+    TreeNode *childleft = node->left;
+    TreeNode *childright = node->right;
 
     if(childleft != nullptr){
         //绘制直线
@@ -123,7 +138,6 @@ void MyTreeWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 }
 void MyTreeWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
 
-    //qDebug()<<"mouseMoveEvent   111111111111";
 
     if(ispress){
 
@@ -132,19 +146,13 @@ void MyTreeWidget::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
         float dy = event->pos().ry() - premouseposy;
 
 
-       // qDebug()<<"mouseMoveEvent dx:"<<dx<<"   dy:"<<dy;
 
         premouseposx = event->pos().rx();
         premouseposy = event->pos().ry();
 
-       // qDebug()<<"mouseMoveEvent rootx:"<<rootx<<"   rooty:"<<rooty;
 
         rootx = (rootx + dx);
         rooty = (rooty + dy);
-
-
-       // qDebug()<<"mouseMoveEvent rootx:"<<rootx<<"   rooty:"<<rooty;
-
 
 
 
