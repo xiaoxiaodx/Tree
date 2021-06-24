@@ -219,9 +219,7 @@ void RBTree<KEY,VALUE>::delete_fixup(Node* node)
 
                 if(siblingRightChildeNode != nullptr && siblingRightChildeNode->color == NODE_RED){
                     //兄弟节点有右子节点且为红
-
                     left_rotation(parentNode);
-
                     siblingNode->color = parentNode->color;
                     parentNode->color = NODE_BLACK;
                     siblingRightChildeNode->color = NODE_BLACK;
@@ -232,13 +230,10 @@ void RBTree<KEY,VALUE>::delete_fixup(Node* node)
                     right_rotation(siblingNode);
                     siblingLeftChildeNode->color = NODE_BLACK;
                     siblingNode->color = NODE_RED;
-
                 }else{
 
                     //兄弟节点的子节点为黑或者nullptr
-
                     if(parentNode->color == NODE_RED){
-
                         parentNode->color = NODE_BLACK;
                         siblingNode->color = NODE_RED;
                         break;
@@ -248,11 +243,7 @@ void RBTree<KEY,VALUE>::delete_fixup(Node* node)
                         curNode = parentNode;//新的起点
                         continue;
                     }
-
                 }
-
-
-
             }else if(siblingNode->color == NODE_RED ){
 
                 left_rotation(parentNode);
@@ -261,13 +252,7 @@ void RBTree<KEY,VALUE>::delete_fixup(Node* node)
 
             }
 
-
-
-
         }else{//与左子节点对称
-
-
-
 
             Node * siblingNode = curNode->parent->left;
             Node * parentNode = curNode->parent;
@@ -314,8 +299,6 @@ void RBTree<KEY,VALUE>::delete_fixup(Node* node)
                         break;
                     }
                 }
-
-
 
             }else if(siblingNode->color == NODE_RED ){
 
@@ -380,7 +363,7 @@ void RBTree<KEY,VALUE>::right_rotation(Node *x){
 }
 
 
-
+//返回一个待删除的节点
 template <class KEY,class VALUE>
 RBTree<KEY,VALUE>* RBTree<KEY,VALUE>::remove(KEY key){
 
@@ -435,11 +418,6 @@ RBTree<KEY,VALUE>* RBTree<KEY,VALUE>::remove(KEY key){
 
                 successorNode->key = key;
                 successorNode->value = value;
-
-
-
-
-
 
                 return successorNode;
 
