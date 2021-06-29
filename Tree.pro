@@ -16,17 +16,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    binarysearchtree.cpp \
     main.cpp \
     mainwindow.cpp \
+    minheap.cpp \
     mytreewidget.cpp \
-    rbtree.cpp
+    worker.cpp
 
 HEADERS += \
-    binarysearchtree.h \
     mainwindow.h \
+    minheap.h \
     mytreewidget.h \
-    rbtree.h
+    worker.h
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -2,8 +2,20 @@
 #define MYTREEWIDGET_H
 
 #include <QGraphicsWidget>
-#include "rbtree.h"
 
+#include "minheap.h"
+#include <QThread>
+
+class TimerNode{
+
+public:
+    int x,y,offset;
+    qint64 expire;
+    void debug(){
+
+        qDebug()<<"expire:"<<expire;
+    }
+};
 using namespace std;
 class MyTreeWidget : public QGraphicsWidget
 {
@@ -23,17 +35,18 @@ protected:
 signals:
     void signal_wheelevent(int delta);
 
+    void signal_dowork();
 public slots:
     void slot_addnode(int key);
     void slot_deletenode(int key);
-
+    void slot_timeout();
 
 private:
 
-     typedef RBTree<int,string> Tree;
-     typedef Tree::Node TreeNode;
-     Tree bstree;
-     void drawTreeNode(QPainter *pt,TreeNode *node,int level,float x,float y);
+     MinHeap<TimerNode*> minheap;
+
+
+     void drawTreeNode(QPainter *pt,Node<TimerNode*> node,int x,int y);
 
 
     //以下定义的是以像素为单位
@@ -55,6 +68,8 @@ private:
 
     //根节点位置
     float rootx,rooty;
+
+    QThread workerThread;
 };
 
 #endif // MYTREEWIDGET_H

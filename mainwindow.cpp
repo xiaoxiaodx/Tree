@@ -21,12 +21,6 @@ MainWindow::MainWindow(QMainWindow *parent)
     rootx = 0;
     rooty = 0;
 
-
-
-
-
-
-
     m_scene=new QGraphicsScene;
 
 
@@ -51,7 +45,6 @@ MainWindow::MainWindow(QMainWindow *parent)
 
 void MainWindow::btnProcess(){
 
-
     int btn_w = 80;
     int btn_h = 30;
     int w = this->width();
@@ -65,9 +58,6 @@ void MainWindow::btnProcess(){
     QPushButton *btn_addnode = new QPushButton("添加节点",this);
     btn_addnode->setGeometry((10+btn_w)*(btnindex++),10,btn_w,btn_h);
     connect(btn_addnode,&QPushButton::clicked,this,[=] ()  {
-
-
-
 
         unsigned int a = QRandomGenerator::global()->bounded(10242);
 
@@ -93,10 +83,12 @@ void MainWindow::btnProcess(){
     connect(btn_deletenode,&QPushButton::clicked,this,[=] ()  {
 
 
-        int key = editkey1->toPlainText().toInt();
-
-
-        emit signal_remove(key);
+        bool isok = false;
+        int key = editkey1->toPlainText().toInt(&isok);
+        if(isok){
+             emit signal_remove(key);
+        }else
+            emit signal_remove(0);
         m_window->viewport()->update();
     });
 
@@ -109,32 +101,13 @@ void MainWindow::btnProcess(){
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
 
-
-   // qDebug()<<"resizeEvent:"<<event->size();
-
-    //qDebug()<<"m_window size:"<<m_window->size();
-
     treewidget->resize(event->size());
 
     m_scene->setSceneRect(0,0,event->size().width(),event->size().height());
-    //qDebug()<<"treewidget resize:"<<treewidget->size();
+
 }
 void MainWindow::slot_wheelevent(int delta)
 {
-
-
-
-    //    qDebug()<<"delta:"<<delta;
-    //    if(delta > 0){
-    //        m_scale = 1.2;
-    //    }else{
-    //        m_scale = 0.833333;
-    //    }
-
-
-    //    qDebug()<<"scale:"<<m_scale;
-    //    m_window->scale(m_scale,m_scale);
-    //    m_window->viewport()->update();
 
 }
 MainWindow::~MainWindow()
